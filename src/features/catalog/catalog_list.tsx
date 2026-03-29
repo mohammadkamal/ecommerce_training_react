@@ -10,7 +10,7 @@ interface CatalogItemModel {
 export default function CatalogList({ items }: { items: CatalogItemModel[] }) {
     return (
         <>
-            {items.map((item) => CatalogItem({ name: item.name, image: item.image, rating: item.rating }))}
+            {items.map((item) => CatalogItem({ name: item.name, image: item.image, rating: item.rating, inCart: false }))}
         </>
     );
 }

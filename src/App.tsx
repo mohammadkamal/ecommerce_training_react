@@ -4,7 +4,6 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import ShoppingCartCounter from './features/cart/components/shopping_cart_counter.tsx'
-import CatalogItem from './features/catalog/catalog_item.tsx'
 import CatalogList from './features/catalog/catalog_list.tsx'
 
 function App() {

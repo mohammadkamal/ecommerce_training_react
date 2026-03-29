@@ -1,7 +1,8 @@
-export default function CatalogItem({ name, image, rating }: {
+export default function CatalogItem({ name, image, rating, inCart }: {
     name: string;
     image: string;
     rating: number;
+    inCart: boolean;
 }) {
     const imageWidth = 500;
 
@@ -28,7 +29,13 @@ export default function CatalogItem({ name, image, rating }: {
                     alt={product.name}
                     width={imageWidth} />
             </div>
-            <button>Add to Cart</button>
+            <CatalogItemButton inCart={inCart} />
         </div>
+    );
+}
+
+function CatalogItemButton({ inCart }: { inCart: boolean; }) {
+    return (
+        <button>{inCart ? "Remove from Cart" : "Add to Cart"}</button>
     );
 }
