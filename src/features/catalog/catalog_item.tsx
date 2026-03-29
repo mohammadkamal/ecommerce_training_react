@@ -1,22 +1,31 @@
 export default function CatalogItem() {
-    const containerStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column' as const,
-        border: '1px solid black',
+    const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a2/Vegetable-Carrot-Bundle-wStalks.jpg";
+    const productLabel = "Carrot";
+    const rating = 4.5;
+    const imageWidth = 500;
+
+    const product = {
+        image: imageUrl,
+        name: productLabel,
+        rating: rating,
     };
 
     return (
-        <div style={containerStyle}>
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column' as const,
+            border: '1px solid black',
+        }}>
             <div>
-                <text>Carrot</text>
-                <text> (4.5/5.0)</text>
+                <text>{product.name}</text>
+                <text> ({product.rating}/5.0)</text>
             </div>
             <div>
                 <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Vegetable-Carrot-Bundle-wStalks.jpg"
-                    alt="Carrot"
-                    width={500} />
+                    src={product.image}
+                    alt={product.name}
+                    width={imageWidth} />
             </div>
             <button>Add to Cart</button>
         </div>
