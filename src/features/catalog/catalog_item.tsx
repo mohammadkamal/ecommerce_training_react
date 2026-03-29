@@ -1,12 +1,13 @@
-export default function CatalogItem() {
-    const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a2/Vegetable-Carrot-Bundle-wStalks.jpg";
-    const productLabel = "Carrot";
-    const rating = 4.5;
+export default function CatalogItem({ name, image, rating }: {
+    name: string;
+    image: string;
+    rating: number;
+}) {
     const imageWidth = 500;
 
     const product = {
-        image: imageUrl,
-        name: productLabel,
+        image: image,
+        name: name,
         rating: rating,
     };
 
