@@ -29,13 +29,18 @@ export default function CatalogItem({ name, image, rating, inCart }: {
                     alt={product.name}
                     width={imageWidth} />
             </div>
-            <CatalogItemButton inCart={inCart} />
+            <CatalogItemButton inCart={inCart} onClick={() => { }} />
         </div>
     );
 }
 
-function CatalogItemButton({ inCart }: { inCart: boolean; }) {
+function CatalogItemButton({ inCart, onClick }: { inCart: boolean; onClick: () => void }) {
     return (
-        <button>{inCart ? "Remove from Cart" : "Add to Cart"}</button>
+        <button onClick={e => {
+            e.stopPropagation();
+            onClick();
+        }}>
+            {inCart ? "Remove from Cart" : "Add to Cart"}
+        </button>
     );
 }
