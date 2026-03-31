@@ -1,8 +1,9 @@
-export default function CatalogItem({ name, image, rating, inCart }: {
+import { useState } from "react";
+
+export default function CatalogItem({ name, image, rating }: {
     name: string;
     image: string;
     rating: number;
-    inCart: boolean;
 }) {
     const imageWidth = 500;
 
@@ -29,16 +30,18 @@ export default function CatalogItem({ name, image, rating, inCart }: {
                     alt={product.name}
                     width={imageWidth} />
             </div>
-            <CatalogItemButton inCart={inCart} onClick={() => { }} />
+            <CatalogItemButton />
         </div>
     );
 }
 
-function CatalogItemButton({ inCart, onClick }: { inCart: boolean; onClick: () => void }) {
+function CatalogItemButton() {
+    const [inCart, setInCart] = useState(false);
+
     return (
         <button onClick={e => {
             e.stopPropagation();
-            onClick();
+            setInCart((inCart) => !inCart);
         }}>
             {inCart ? "Remove from Cart" : "Add to Cart"}
         </button>
