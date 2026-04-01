@@ -1,6 +1,6 @@
-import type { CatalogItemModel } from "./catalog_item_type";
+import type { CatalogItemModel } from "../domain/catalog_item_model";
 
-export const products: CatalogItemModel[] = [
+export const mockCatalogItems: CatalogItemModel[] = [
     {
         id: 1,
         name: 'Premium Wireless Headphones',

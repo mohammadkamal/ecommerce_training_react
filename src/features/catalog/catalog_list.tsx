@@ -1,5 +1,5 @@
-import CatalogItem from "./catalog_item";
-import type { CatalogItemModel } from "./catalog_item_type";
+import CatalogItem from "./components/catalog_item";
+import type { CatalogItemModel } from "./domain/catalog_item_model";
 
 export default function CatalogList({ items }: { items: CatalogItemModel[] }) {
     return (
