@@ -1,7 +1,7 @@
 import './App.css'
 import ShoppingCartCounter from './features/cart/components/shopping_cart_counter.tsx'
 import CatalogList from './features/catalog/catalog_list.tsx'
-import { products } from './features/catalog/catalog_items.ts';
+import { mockCatalogItems } from './features/catalog/data/mock_catalog_items.ts'
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
     <>
       <ShoppingCartCounter />
       <CatalogList
-        items={products}
+        items={mockCatalogItems}
       />
     </>
   )

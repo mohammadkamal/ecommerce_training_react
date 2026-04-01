@@ -28,36 +28,38 @@ export default function CatalogItem({ name,
         <div style={{
             ...style,
             boxShadow: hovered ? '0 10px 15px -3px rgb(0 0 0 / 0.1)' : 'none',
-
         }}
             onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}>
-            <CatalogItemImage image={image} name={name} />
+            onMouseLeave={() => setHovered(false)}
+        >
+            <CatalogItemImage image={image} name={name} hovered={hovered} />
 
-            <div className="p-4">
-                <CatalogItemName name={name} />
+            <div style={{ padding: '1rem' }}>
+                <CatalogItemName name={name} hovered={hovered} />
 
-                <div className="flex items-center gap-1 mb-2">
-                    <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                            <Star
-                                key={i}
-                                className={`h-4 w-4 ${i < Math.floor(rating)
-                                    ? 'fill-yellow-400 text-yellow-400'
-                                    : 'text-gray-300'
-                                    }`}
-                            />
-                        ))}
-                    </div>
-                    <span className="text-sm text-gray-600">({reviews})</span>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    marginBottom: '0.5rem'
+                }}>
+                    <CatalogItemRating rating={rating} />
+                    <span style={{ fontSize: '0.875rem', color: '#4b5563' }}>({reviews})</span>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                <p style={{
+                    fontSize: '0.875rem',
+                    color: '#4b5563',
+                    marginBottom: '1rem',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                }}>
                     {description}
                 </p>
-                <div className="flex items-center justify-between">
-                    <span className="text-xl font-semibold">${price}</span>
-
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: '1.25rem', fontWeight: 600 }}>${price}</span>
                     <CatalogItemAction inStock={inStock} />
                 </div>
             </div>
@@ -102,9 +104,7 @@ function CatalogItemAction({ inStock }: { inStock: boolean }) {
     );
 }
 
-function CatalogItemImage({ image, name }: { image: string, name?: string }) {
-    const [hovered, setHovered] = useState(false);
-
+function CatalogItemImage({ image, name, hovered }: { image: string, name?: string, hovered: boolean }) {
     const imageContainerStyles: CSSProperties = {
         aspectRatio: '1 / 1',
         overflow: 'hidden',
@@ -131,16 +131,12 @@ function CatalogItemImage({ image, name }: { image: string, name?: string }) {
                     ...imgStyles,
                     ...(hovered ? imgHoverStyles : {}),
                 }}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
             />
         </div>
     );
 }
 
-function CatalogItemName({ name }: { name: string }) {
-    const [hovered, setHovered] = useState(false);
-
+function CatalogItemName({ name, hovered }: { name: string, hovered: boolean }) {
     const headingStyles: CSSProperties = {
         fontWeight: 600,
         marginBottom: '0.5rem', // mb-2
@@ -157,10 +153,26 @@ function CatalogItemName({ name }: { name: string }) {
                 ...headingStyles,
                 ...(hovered ? headingHoverStyles : {}),
             }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
         >
             {name}
         </h3>
+    );
+}
+
+function CatalogItemRating({ rating }: { rating: number }) {
+    return (
+        <div style={{ display: 'flex' }}>
+            {[...Array(5)].map((_, i) => (
+                <Star
+                    key={i}
+                    style={{
+                        height: '1rem',
+                        width: '1rem',
+                        fill: i < Math.floor(rating) ? '#facc15' : 'none',    // yellow-400 or none
+                        color: i < Math.floor(rating) ? '#facc15' : '#d1d5db', // yellow-400 or gray-300
+                    }}
+                />
+            ))}
+        </div>
     );
 }
