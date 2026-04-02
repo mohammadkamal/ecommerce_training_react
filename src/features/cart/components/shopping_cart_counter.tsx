@@ -1,3 +1,5 @@
+import { useShoppingCart } from "../controllers/shopping_cart_context";
+
 export default function ShoppingCartCounter() {
     const containerStyle = {
         display: 'flex',
@@ -5,12 +7,13 @@ export default function ShoppingCartCounter() {
         justifyContent: 'end',
     };
 
+    const count = useShoppingCart().length;
 
     return (
         <section>
             <div style={containerStyle}>
                 <text>Shopping cart</text>
-                <text> (0)</text>
+                <text> ({count})</text>
             </div>
         </section>
     )

@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 import { type CSSProperties, useState } from "react";
-import type { CatalogItemProps } from "../domain/catalog_item_props";
+import { useShoppingCart, useShoppingCartDispatch } from "../../cart/controllers/shopping_cart_context";
+import type { CatalogItemModel } from "../domain/catalog_item_model";
 
 export default function CatalogItem({
     id,
@@ -11,10 +12,7 @@ export default function CatalogItem({
     price,
     reviews,
     inStock,
-    inCart,
-    onAdd,
-    onRemove,
-}: CatalogItemProps) {
+}: CatalogItemModel) {
 
     const style: CSSProperties = {
         backgroundColor: '#ffffff',
@@ -29,6 +27,22 @@ export default function CatalogItem({
     };
 
     const [hovered, setHovered] = useState(false);
+    const dispatch = useShoppingCartDispatch();
+    const inCart = useShoppingCart().includes(id);
+
+    function handleAddToCart(id: number) {
+        dispatch({
+            action: 'add',
+            itemId: id,
+        });
+    }
+
+    function handleRemoveFromCart(id: number) {
+        dispatch({
+            action: 'remove',
+            itemId: id,
+        });
+    }
 
     return (
         <div style={{
@@ -69,7 +83,7 @@ export default function CatalogItem({
                     <CatalogItemAction inStock={inStock}
                         inCart={inCart}
                         onInteract={
-                            () => inCart ? onRemove(id) : onAdd(id)
+                            () => inCart ? handleRemoveFromCart(id) : handleAddToCart(id)
                         }
                     />
                 </div>
