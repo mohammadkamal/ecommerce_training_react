@@ -1,14 +1,20 @@
 import { Star } from "lucide-react";
 import { type CSSProperties, useState } from "react";
-import type { CatalogItemModel } from "../domain/catalog_item_model";
+import type { CatalogItemProps } from "../domain/catalog_item_props";
 
-export default function CatalogItem({ name,
+export default function CatalogItem({
+    id,
+    name,
     description,
     image,
     rating,
     price,
     reviews,
-    inStock }: CatalogItemModel) {
+    inStock,
+    inCart,
+    onAdd,
+    onRemove,
+}: CatalogItemProps) {
 
     const style: CSSProperties = {
         backgroundColor: '#ffffff',
@@ -60,14 +66,20 @@ export default function CatalogItem({ name,
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ fontSize: '1.25rem', fontWeight: 600 }}>${price}</span>
-                    <CatalogItemAction inStock={inStock} />
+                    <CatalogItemAction inStock={inStock}
+                        inCart={inCart}
+                        onInteract={
+                            () => inCart ? onRemove(id) : onAdd(id)
+                        }
+                    />
                 </div>
             </div>
         </div>
     );
 }
 
-function CatalogItemAction({ inStock }: { inStock: boolean }) {
+function CatalogItemAction({ inStock, inCart, onInteract }
+    : { inStock: boolean, inCart: boolean, onInteract: () => void }) {
     const buttonStyles: CSSProperties = {
         display: 'inline-flex',
         alignItems: 'center',
@@ -98,8 +110,9 @@ function CatalogItemAction({ inStock }: { inStock: boolean }) {
                 ...buttonStyles,
                 ...(!inStock ? buttonDisabledStyles : {}),
             }}
+            onClick={onInteract}
         >
-            {inStock ? 'Add to Cart' : 'Out of Stock'}
+            {inStock ? (inCart ? 'Remove from Cart' : 'Add to Cart') : 'Out of Stock'}
         </button>
     );
 }
@@ -129,7 +142,7 @@ function CatalogItemImage({ image, name, hovered }: { image: string, name?: stri
                 alt={name}
                 style={{
                     ...imgStyles,
-                    ...(hovered ? imgHoverStyles : {}),
+                    ...(hovered && imgHoverStyles),
                 }}
             />
         </div>
@@ -151,7 +164,7 @@ function CatalogItemName({ name, hovered }: { name: string, hovered: boolean }) 
         <h3
             style={{
                 ...headingStyles,
-                ...(hovered ? headingHoverStyles : {}),
+                ...(hovered && headingHoverStyles),
             }}
         >
             {name}
